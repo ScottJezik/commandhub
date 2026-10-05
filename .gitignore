@@ -8,3 +8,7 @@
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Build output and local dependencies
+node_modules/
+dist/
