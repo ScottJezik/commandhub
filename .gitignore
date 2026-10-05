@@ -1,0 +1,10 @@
+# Local environment files
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
