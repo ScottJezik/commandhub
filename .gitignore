@@ -12,3 +12,5 @@ Desktop.ini
 # Build output and local dependencies
 node_modules/
 dist/
+.astro/
+data/*.json

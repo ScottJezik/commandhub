@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const articles = (await getCollection('articles')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+const projects = await getCollection('projects')
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+---
+<BaseLayout>
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span>Provo, Utah · Building in public</p>
+        <h1>Technology is never <em>only</em> technical.</h1>
+        <p class="hero-lede">I explore how engineering, human behavior, culture, geopolitics, and institutions interact to shape the world—and how understanding those connections can help us make better progress.</p>
+        <div class="hero-actions"><a class="button button-dark" href="#work">Explore the work <span>↓</span></a><a class="text-button" href="mailto:scottjezik@gmail.com">Invite me into a conversation <span>↗</span></a></div>
+      </div>
+      <div class="hero-card"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-card-label">Current question</div><p>What changes when builders understand the people and systems their work is meant to serve?</p><div class="hero-card-footer"><span>Engineering</span><span>+ Social science</span><span>+ Geopolitics</span><span>+ Public imagination</span></div></div>
+    </section>
+
+    <section class="signal-band"><div class="shell signal-grid"><div><strong>01</strong><span>Build useful things</span></div><div><strong>02</strong><span>Ask better questions</span></div><div><strong>03</strong><span>Make ideas legible</span></div><div><strong>04</strong><span>Keep progress human</span></div></div></section>
+
+    <section id="about" class="section shell split-section"><div class="section-intro"><p class="section-label">01 / About</p><h2>A living CV for a curious builder.</h2></div><div class="section-body"><p>I’m building a body of work at the intersection of engineering, technology, social science, geopolitics, and everyday life. My interests move between making, explaining, and asking how power, institutions, and human behavior shape the systems around us.</p><p>This site is the searchable version of my CV: projects with context, writing with a point of view, and talks that turn complicated ideas into useful conversations.</p><a class="inline-link" href="#cv">See the full timeline <span>↘</span></a></div></section>
+
+    <section id="work" class="section shell"><div class="section-heading"><div><p class="section-label">02 / Selected work</p><h2>Things I’m making and testing.</h2></div><span class="heading-note">Projects · systems · experiments</span></div><div class="work-grid">
+      {projects.map((project, index) => <a class={`work-card ${index === 0 ? 'featured' : ''}`} href={`${base}projects/${project.id}/`}><div class="card-top"><span class="card-kicker">{project.data.status}</span><span class="card-number">{String(index + 1).padStart(2, '0')}</span></div><div class={`work-visual ${index === 0 ? 'dashboard-visual' : index === 1 ? 'field-visual' : 'motion-visual'}`}><span class="content-visual-label">{index === 0 ? 'MAKE / MEASURE / LEARN' : index === 1 ? 'FIELD NOTES' : 'MOVE / BUILD / LEARN'}</span></div><h3>{project.data.title}</h3><p>{project.data.description}</p><div class="tag-row">{project.data.tags.map(tag => <span>{tag}</span>)}</div></a>)}
+    </div></section>
+
+    <section id="writing" class="section shell writing-section"><div class="section-heading"><div><p class="section-label">03 / Writing</p><h2>Notes on the world we’re building.</h2></div><a class="inline-link" href="mailto:scottjezik@gmail.com?subject=Writing%20and%20collaboration">Suggest a conversation <span>↗</span></a></div><div class="writing-list">
+      {articles.map((article, index) => <a class="writing-row" href={`${base}articles/${article.id}/`}><div class="writing-meta"><span>{article.data.category}</span><span>{String(index + 1).padStart(2, '0')}</span></div><div><h3>{article.data.title}</h3><p>{article.data.description}</p></div><span class="writing-arrow">↗</span></a>)}
+    </div><p class="archive-note">Articles are individual Markdown files, so every piece gets its own permanent, linkable page.</p></section>
+
+    <section id="speaking" class="section shell speaking-section"><div class="speaking-card"><div class="speaking-left"><p class="section-label">04 / Speaking</p><h2>Make complex ideas easier to enter.</h2><p>I’m developing talks and workshops for students, builders, educators, and teams who want to think more carefully about the relationship between technology, power, and the people who use them.</p><a class="button button-light" href="mailto:scottjezik@gmail.com?subject=Speaking%20invitation">Invite me to speak <span>↗</span></a></div><div class="talk-list"><div><span>Talk 01</span><strong>Engineering Is Not Enough</strong><small>Why technical solutions need human context.</small></div><div><span>Talk 02</span><strong>Progress Is a Systems Problem</strong><small>How incentives, institutions, and tools shape outcomes.</small></div><div><span>Talk 03</span><strong>Technology Is Geopolitical</strong><small>How infrastructure and power shape the systems we live in.</small></div></div></div></section>
+
+    <section id="cv" class="section shell cv-section"><div class="section-heading"><div><p class="section-label">05 / CV</p><h2>A timeline of work, learning, and direction.</h2></div><a class="download-link" href="#" onclick="window.print(); return false;">Print / save CV <span>↗</span></a></div><div class="cv-grid"><div class="cv-column"><p class="cv-heading">Now</p><div class="cv-item"><span class="cv-date">2026—</span><div><h3>Independent creator and builder</h3><p>Developing an interdisciplinary public platform across engineering, technology, social science, geopolitics, and personal practice.</p></div></div><div class="cv-item"><span class="cv-date">2026—</span><div><h3>Creator Intelligence Dashboard</h3><p>Building a data-informed system for understanding content, audience growth, and creative experiments.</p></div></div></div><div class="cv-column"><p class="cv-heading">Focus areas</p><div class="focus-list"><span>Engineering communication</span><span>Technology and society</span><span>Geopolitics</span><span>Systems thinking</span><span>STEM outreach</span><span>Learning in public</span><span>Movement and iteration</span></div></div></div><div class="cv-footer"><span>Full résumé PDF coming soon</span><a class="inline-link" href="mailto:scottjezik@gmail.com?subject=CV%20request">Request a complete CV <span>↗</span></a></div></section>
+    <section class="closing shell"><p class="section-label">06 / Start a conversation</p><h2>Have a problem worth looking at from more than one angle?</h2><a class="button button-dark" href="mailto:scottjezik@gmail.com">scottjezik@gmail.com <span>↗</span></a></section>
+  </main>
+</BaseLayout>
